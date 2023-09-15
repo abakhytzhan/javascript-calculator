@@ -8,6 +8,17 @@ function App() {
   const buttonsHandler = (event) => {
     const value = event.target.value;
 
+    if (
+      formula === "=undefined" &&
+      (value === "/" ||
+        value === "x" ||
+        value === "+" ||
+        value === "-" ||
+        value === "=")
+    ) {
+      return;
+    }
+
     if (formula.indexOf("=") >= 0) {
       if (!isNaN(value)) {
         setDisplay(value);
@@ -34,10 +45,12 @@ function App() {
       } else {
         formula2 = formula;
       }
-      const result = eval(formula2.replaceAll("x", "*"))?.toString();
+      const result = eval(
+        formula2.replaceAll("x", "*").replaceAll("--", "+").replaceAll("-", "-")
+      )?.toString();
       setDisplay(result);
       setFormula(formula2 + "=" + result);
-    } else if (display.indexOf(".") >= 0 && value === ".") {
+    } else if (display?.indexOf(".") >= 0 && value === ".") {
       return;
     } else if (formula.length === 0) {
       if (!isNaN(value) || value === "-" || value === "+") {
