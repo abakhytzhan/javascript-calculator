@@ -19,6 +19,10 @@ function App() {
       return;
     }
 
+    if (formula.indexOf("=") >= 0 && value === "=") {
+      return;
+    }
+
     if (formula.indexOf("=") >= 0) {
       if (!isNaN(value)) {
         setDisplay(value);
